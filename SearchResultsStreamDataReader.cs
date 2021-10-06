@@ -96,11 +96,11 @@ namespace SplunkClientDataReader
       return (byte) m_Current.GetValue(m_IndexToNameMapping[i]);
     }
 
-    public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length){
+    public long GetBytes(int i, long fieldoffset, byte[] buffer, int bufferoffset, int length){
       var data = m_Current.GetValue(m_IndexToNameMapping[i]) as IEnumerable<byte>;
 
       long count = 0;
-      foreach(var x in data.Skip((int)fieldOffset).Take(length).Select((b, idx) => new { b, idx }))
+      foreach(var x in data.Skip((int)fieldoffset).Take(length).Select((b, idx) => new { b, idx }))
       {
         buffer[bufferoffset + x.idx] = x.b;
         count++;
@@ -112,11 +112,11 @@ namespace SplunkClientDataReader
       return (char) m_Current.GetValue(m_IndexToNameMapping[i]);
     }
 
-    public long GetChars(int i, long fieldOffset, char[] buffer, int bufferoffset, int length){
+    public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length){
       var data = m_Current.GetValue(m_IndexToNameMapping[i]) as IEnumerable<char>;
 
       long count = 0;
-      foreach(var x in data.Skip((int)fieldOffset).Take(length).Select((b, idx) => new { b, idx }))
+      foreach(var x in data.Skip((int)fieldoffset).Take(length).Select((b, idx) => new { b, idx }))
       {
         buffer[bufferoffset + x.idx] = x.b;
         count++;
