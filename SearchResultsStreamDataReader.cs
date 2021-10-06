@@ -1,5 +1,8 @@
+using System;
 using System.Data;
-using Spunk.Client;
+using System.Collections.Generic;
+using System.Linq;
+using Splunk.Client;
 
 namespace SplunkClientDataReader
 {
@@ -7,13 +10,14 @@ namespace SplunkClientDataReader
   {
     private IEnumerator<SearchResult> m_Iterator;
     private SearchResult m_Current;
-    private readonly IDictionary<int, string> m_IndexToNameMapping = new Dictionary<int, string>();
+    private readonly IDictionary<int, string> m_IndexToNameMapping ;
     private readonly IReadOnlyCollection<string> fields;
     private readonly SearchResultStream results;
 
-    public SearchResultsStreamDataReader(SearchResultsStream results)
+    public SearchResultsStreamDataReader(SearchResultStream results)
     {
       this.fields = results.FieldNames;
+      this.m_IndexToNameMapping = new Dictionary<int, string>(this.fields.Count);
       this.results = results;
       int i = 0;
 
@@ -92,7 +96,7 @@ namespace SplunkClientDataReader
       return (byte) m_Current.GetValue(m_IndexToNameMapping[i]);
     }
 
-    public byte GetBytes(int i, long fieldOffset, byte[] buffer, int bufferOffset, int length){
+    public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length){
       var data = m_Current.GetValue(m_IndexToNameMapping[i]) as IEnumerable<byte>;
 
       long count = 0;
@@ -108,7 +112,9 @@ namespace SplunkClientDataReader
       return (char) m_Current.GetValue(m_IndexToNameMapping[i]);
     }
 
-    public char GetChars(int i, long fieldOffset, char[] buffer, int bufferOffset, int length){
+    public long GetChars(int i, long fieldOffset, char[] buffer, int bufferoffset, int length){
+      var data = m_Current.GetValue(m_IndexToNameMapping[i]) as IEnumerable<char>;
+
       long count = 0;
       foreach(var x in data.Skip((int)fieldOffset).Take(length).Select((b, idx) => new { b, idx }))
       {
@@ -166,7 +172,7 @@ namespace SplunkClientDataReader
       return m_IndexToNameMapping[i];
     }
 
-    public string GetOrdinal(string name){
+    public int GetOrdinal(string name){
       int i = 0;
 
       foreach(var item in fields) {
@@ -193,7 +199,7 @@ namespace SplunkClientDataReader
       return this[i];
     }
 
-    public object GetValues(object[] values){
+    public int GetValues(object[] values){
       int count = 0;
       for (int i = 0; i < this.FieldCount && i < values.Length; i++){
         values[i] = this[i];
@@ -204,7 +210,7 @@ namespace SplunkClientDataReader
 
     public bool IsDBNull(int i){
       object value = this[i];
-      return value == null || value == DBNull;
+      return value == null || value == DBNull.Value;
     }
 
     public bool NextResult(){
@@ -221,7 +227,7 @@ namespace SplunkClientDataReader
       var ret = m_Iterator.MoveNext();
       if(ret)
       {
-        m_Current = mIterator.Current;
+        m_Current = m_Iterator.Current;
       }
 
       return ret;    
