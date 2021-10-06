@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+n<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net452;net461;netcoreapp3.1;net5.0</TargetFrameworks>
+        <TargetFrameworks>netstandard1.0;netcoreapp3.1;net5.0</TargetFrameworks>
         <Authors>Brian Yule</Authors>
         <RepositoryType>GIT</RepositoryType>
         <IsPackable>true</IsPackable>
@@ -11,7 +11,7 @@
         <RepositoryUrl>https://github.com/YulerB/SplunkClientDataReader</RepositoryUrl>
         <ProjectGuid>{f26a0552-3dcc-46e3-8230-a95c4d2c3196}</ProjectGuid>
     </PropertyGroup>
-    <ItemGroup Condition="'$(TargetFramework)' == 'net452' or '$(TargetFramework)' == 'net461'">
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.0'">
         <PackageReference Include="Splunk.Client" Version="2.2.9" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' or '$(TargetFramework)' == 'net5.0'">
