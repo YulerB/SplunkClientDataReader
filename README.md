@@ -23,9 +23,9 @@ public async Task StreamSplunkToSqlServer()
     {
       await client.LogOnAsync(credential.UserName, credential.Password).ConfigureAwait(false);
 
-      using(SearchResultsStream results = await client.ExportSearchResultsAsync(search, searchExportArgs).ConfigureAwait(false))
+      using(SearchResultStream results = await client.ExportSearchResultsAsync(search, searchExportArgs).ConfigureAwait(false))
       {
-        using(SearchResultsStreamDataReader reader = new SearchResultStreamDataReader(results))
+        using(SearchResultStreamDataReader reader = new SearchResultStreamDataReader(results))
         {
           await sqlBlockCopy.WriteToServerAsync(reader).ConfigureAwait(false);
         }
