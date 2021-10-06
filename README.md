@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 ...
 
-public void StreamSplunkToSqlServer()
+public async Task StreamSplunkToSqlServer()
 {
   
   SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(connectionString, SqlBulkCopyOptions.Default);
