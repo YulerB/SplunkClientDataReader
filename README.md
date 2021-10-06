@@ -1,5 +1,7 @@
 # Splunk Client Data Reader
 
+[![.NET](https://github.com/YulerB/SplunkClientDataReader/actions/workflows/dotnet.yml/badge.svg)](https://github.com/YulerB/SplunkClientDataReader/actions/workflows/dotnet.yml)
+
 Usage:
 ```csharp
 using Splunk.Client;
