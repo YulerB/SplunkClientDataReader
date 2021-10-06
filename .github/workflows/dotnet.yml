@@ -44,6 +44,6 @@ jobs:
     - name: PushNuget
       run: dotnet nuget push "bin/Release/SplunkClientDataReader.1.0.7.nupkg"  --api-key ${{ secrets.NUGET_API_KEY }} --source "https://api.nuget.org/v3/index.json"  --skip-duplicate
     - name: PushGit
-      run: dotnet nuget push "bin/Release/SplunkClientDataReader.1.0.7.nupkg" --api-key ${GITHUB_TOKEN} --source "https://nuget.pkg.github.com/EFDurationInterceptor/index.json"   --skip-duplicate
+      run: dotnet nuget push "bin/Release/SplunkClientDataReader.1.0.7.nupkg" --api-key ${GITHUB_TOKEN} --source "https://nuget.pkg.github.com/SplunkClientDataReader/index.json"   --skip-duplicate
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
