@@ -1,4 +1,4 @@
-n<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netstandard1.0;netcoreapp3.1;net5.0</TargetFrameworks>
         <Authors>Brian Yule</Authors>
