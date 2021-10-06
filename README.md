@@ -1,4 +1,4 @@
-# SplunkClientDataReader
+# Splunk Client Data Reader
 
 Usage:
 ```
