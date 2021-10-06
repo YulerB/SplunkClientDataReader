@@ -14,7 +14,10 @@
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
-    <ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net452' or '$(TargetFramework)' == 'net461'">
+        <PackageReference Include="Splunk.Client" Version="2.2.9" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' or '$(TargetFramework)' == 'net5.0'">
         <PackageReference Include="Splunk.Client.DotnetCore" Version="1.0.7" />
         <PackageReference Include="SonarAnalyzer.CSharp" Version="8.29.0.36737">
             <PrivateAssets>all</PrivateAssets>
