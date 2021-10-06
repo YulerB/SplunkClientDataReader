@@ -12,7 +12,7 @@ namespace SplunkClientDataReader
     private SearchResult m_Current;
     private readonly IDictionary<int, string> m_IndexToNameMapping ;
     private readonly IReadOnlyCollection<string> fields;
-    private readonly SearchResultStream results;
+    private SearchResultStream results;
 
     public SearchResultStreamDataReader(SearchResultStream results)
     {
@@ -77,15 +77,22 @@ namespace SplunkClientDataReader
 
     public void Close()
     {
-      if (m_Iterator != null){
-        m_Current = null;
-        m_Iterator.Dispose();
-        m_Iterator = null;
-      }
     }
 
-    public void Dispose(){
-      Close();
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+      if (m_Iterator != null){
+        m_Iterator.Dispose();
+      }
+      m_Current = null;
+      m_Iterator = null;
+      results = null;
     }
 
     public bool GetBoolean(int i){
