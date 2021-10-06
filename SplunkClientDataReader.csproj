@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netstandard1.3;netcoreapp3.1;net5.0</TargetFrameworks>
+        <TargetFrameworks>netstandard1.2;netcoreapp3.1;net5.0</TargetFrameworks>
         <Authors>Brian Yule</Authors>
         <RepositoryType>GIT</RepositoryType>
         <IsPackable>true</IsPackable>
@@ -14,7 +14,7 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' or '$(TargetFramework)' == 'net5.0'">
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.2'">
         <PackageReference Include="Splunk.Client" Version="2.2.9" /> 
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' or '$(TargetFramework)' == 'net5.0'">
