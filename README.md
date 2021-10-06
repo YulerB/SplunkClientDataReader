@@ -4,18 +4,24 @@ Usage:
 ```csharp
 using Splunk.Client;
 using SplunkClientDataReader;
+
 ...
-using (var context = new Context(Scheme.Https, endPoint.Host, endPoint.Port))
+
+public void StreamSplunkToSqlServer()
 {
-  using (var client = new Service(context))
+  ...
+  using (var context = new Context(Scheme.Https, endPoint.Host, endPoint.Port))
   {
-    await client.LogOnAsync(credential.UserName, credential.Password).ConfigureAwait(false);
-    
-    using(SearchResultsStream results = await client.ExportSearchResultsAsync(search, searchExportArgs).ConfigureAwait(false))
+    using (var client = new Service(context))
     {
-      using(SearchResultsStreamDataReader reader = new SearchResultStreamDataReader(results))
+      await client.LogOnAsync(credential.UserName, credential.Password).ConfigureAwait(false);
+
+      using(SearchResultsStream results = await client.ExportSearchResultsAsync(search, searchExportArgs).ConfigureAwait(false))
       {
-        await sqlBlockCopy.WriteToServerAsync(reader).ConfigureAwait(false);
+        using(SearchResultsStreamDataReader reader = new SearchResultStreamDataReader(results))
+        {
+          await sqlBlockCopy.WriteToServerAsync(reader).ConfigureAwait(false);
+        }
       }
     }
   }
