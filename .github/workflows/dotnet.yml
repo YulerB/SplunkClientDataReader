@@ -21,8 +21,20 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.x        
+    - name: Install SonarScanner
+      run: dotnet tool install dotnet-sonarscanner --global
     - name: Restore dependencies
       run: dotnet restore
+    - name: Sonar Begin
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      working-directory: src
+      run: dotnet-sonarscanner begin /k:"YulerB_SplunkClientDataReader" /o:"yulerb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=**/*.trx /d:sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml /v:1.0.1.${{ github.run_number }} /d:sonar.links.ci=https://github.com/YulerB/SplunkClientDataReader/actions/runs/${{ github.run_id }} /d:sonar.links.scm=https://github.com/YulerB/SplunkClientDataReader
     - name: Build
-      run: dotnet build --no-restore
-
+      run: dotnet build --no-restore --configuration Release
+    - name: Sonar End
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}" 
