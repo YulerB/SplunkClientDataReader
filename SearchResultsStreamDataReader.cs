@@ -82,4 +82,46 @@ public class SearchResultsStreamDataReader : IDataReader
     Close();
   }
 
+  public bool GetBoolean(int i){
+    return (bool)m_Current.GetValue(m_IndexToNameMapping[i]);
+  }
+
+  public byte GetByte(int i){
+    return (byte) m_Current.GetValue(m_IndexToNameMapping[i]);
+  }
+   
+  public byte GetBytes(int i, long fieldOffset, byte[] buffer, int bufferOffset, int length){
+    var data = m_Current.GetValue(m_IndexToNameMapping[i]) as IEnumerable<byte>;
+    
+    long count = 0;
+    foreach(var x in data.Skip((int)fieldOffset).Take(length).Select((b, idx) => new { b, idx }))
+    {
+      buffer[bufferoffset + x.idx] = x.b;
+      count++;
+    }
+    return count;
+  }
+
+  public char GetChar(int i){
+    return (char) m_Current.GetValue(m_IndexToNameMapping[i]);
+  }
+
+  public char GetChars(int i, long fieldOffset, char[] buffer, int bufferOffset, int length){
+    long count = 0;
+    foreach(var x in data.Skip((int)fieldOffset).Take(length).Select((b, idx) => new { b, idx }))
+    {
+      buffer[bufferoffset + x.idx] = x.b;
+      count++;
+    }
+    return count;
+  }
+  
+  public IDataReader GetData(int i){
+    throw new NotImplementedException();
+  }
+  
+  
+  public string GetDataTypeName(int i){
+    return (string) m_Current.GetValue(m_IndexToNameMapping[i]);
+  }
 }
