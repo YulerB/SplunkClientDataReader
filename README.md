@@ -11,23 +11,24 @@ using System.Data.SqlClient;
 public async Task StreamSplunkToSqlServer()
 {
   
-  SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(connectionString, SqlBulkCopyOptions.Default);
-  sqlBulkCopy.BatchSize = 5000;
-  sqlBulkCopy.EnableStreaming = true;
-  sqlBulkCopy.BulkCopyTimeout = 360;
-  sqlBulkCopy.DestinationTableName = "dbo.SplunkData";
+  using(SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(connectionString, SqlBulkCopyOptions.Default)){
+    sqlBulkCopy.BatchSize = 5000;
+    sqlBulkCopy.EnableStreaming = true;
+    sqlBulkCopy.BulkCopyTimeout = 360;
+    sqlBulkCopy.DestinationTableName = "dbo.SplunkData";
 
-  using (var context = new Context(Scheme.Https, endPoint.Host, endPoint.Port))
-  {
-    using (var client = new Service(context))
+    using (var context = new Context(Scheme.Https, endPoint.Host, endPoint.Port))
     {
-      await client.LogOnAsync(credential.UserName, credential.Password).ConfigureAwait(false);
-
-      using(SearchResultStream results = await client.ExportSearchResultsAsync(search, searchExportArgs).ConfigureAwait(false))
+      using (var client = new Service(context))
       {
-        using(SearchResultStreamDataReader reader = new SearchResultStreamDataReader(results))
+        await client.LogOnAsync(credential.UserName, credential.Password).ConfigureAwait(false);
+
+        using(SearchResultStream results = await client.ExportSearchResultsAsync(search, searchExportArgs).ConfigureAwait(false))
         {
-          await sqlBlockCopy.WriteToServerAsync(reader).ConfigureAwait(false);
+          using(SearchResultStreamDataReader reader = new SearchResultStreamDataReader(results))
+          {
+            await sqlBlockCopy.WriteToServerAsync(reader).ConfigureAwait(false);
+          }
         }
       }
     }
