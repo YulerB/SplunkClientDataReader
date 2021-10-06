@@ -6,7 +6,7 @@ using Splunk.Client;
 
 namespace SplunkClientDataReader
 {
-  public class SearchResultsStreamDataReader : IDataReader
+  public class SearchResultStreamDataReader : IDataReader
   {
     private IEnumerator<SearchResult> m_Iterator;
     private SearchResult m_Current;
@@ -14,7 +14,7 @@ namespace SplunkClientDataReader
     private readonly IReadOnlyCollection<string> fields;
     private readonly SearchResultStream results;
 
-    public SearchResultsStreamDataReader(SearchResultStream results)
+    public SearchResultStreamDataReader(SearchResultStream results)
     {
       this.fields = results.FieldNames;
       this.m_IndexToNameMapping = new Dictionary<int, string>(this.fields.Count);
