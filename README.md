@@ -1,7 +1,7 @@
 # Splunk Client Data Reader
 
 Usage:
-```
+```csharp
 using Splunk.Client;
 using SplunkClientDataReader;
 ...
