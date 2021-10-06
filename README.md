@@ -15,6 +15,7 @@ public void StreamSplunkToSqlServer()
   sqlBulkCopy.BatchSize = 5000;
   sqlBulkCopy.EnableStreaming = true;
   sqlBulkCopy.BulkCopyTimeout = 360;
+  sqlBulkCopy.DestinationTableName = "dbo.SplunkData";
 
   using (var context = new Context(Scheme.Https, endPoint.Host, endPoint.Port))
   {
