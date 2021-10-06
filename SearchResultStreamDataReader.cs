@@ -77,6 +77,11 @@ namespace SplunkClientDataReader
 
     public void Close()
     {
+      if (m_Iterator != null){
+        m_Iterator.Dispose();
+      }
+        
+      m_Iterator = null;
     }
 
     public void Dispose()
@@ -92,7 +97,7 @@ namespace SplunkClientDataReader
           m_Iterator.Dispose();
         }
       }
-      
+
       m_Current = null;
       m_Iterator = null;
       results = null;
