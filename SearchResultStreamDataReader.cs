@@ -87,9 +87,12 @@ namespace SplunkClientDataReader
 
     protected virtual void Dispose(bool disposing)
     {
-      if (m_Iterator != null){
-        m_Iterator.Dispose();
+      if(disposing){
+        if (m_Iterator != null){
+          m_Iterator.Dispose();
+        }
       }
+      
       m_Current = null;
       m_Iterator = null;
       results = null;
