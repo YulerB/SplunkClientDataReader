@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 public void StreamSplunkToSqlServer()
 {
   
-  SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(connectionString,           SqlBulkCopyOptions.Default);
+  SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(connectionString, SqlBulkCopyOptions.Default);
   sqlBulkCopy.BatchSize = 5000;
   sqlBulkCopy.EnableStreaming = true;
   sqlBulkCopy.BulkCopyTimeout = 360;
