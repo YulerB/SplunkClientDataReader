@@ -4,6 +4,8 @@
 ![NuGet Badge](https://buildstats.info/nuget/SplunkClientDataReader)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=YulerB_SplunkClientDataReader&metric=alert_status)](https://sonarcloud.io/dashboard?id=YulerB_SplunkClientDataReader)
 
+This package provides SearchResultStreamDataReader, the missing link between Splunk.Client and SqlBulkCopy (SqlBulkCopy takes an IDataReader).
+
 Usage:
 ```csharp
 using Splunk.Client;
@@ -27,9 +29,9 @@ public async Task StreamSplunkToSqlServer()
       {
         await client.LogOnAsync(credential.UserName, credential.Password).ConfigureAwait(false);
 
-        using(SearchResultStream results = await client.ExportSearchResultsAsync(search, searchExportArgs).ConfigureAwait(false))
+        using(var results = await client.ExportSearchResultsAsync(search, searchExportArgs).ConfigureAwait(false))
         {
-          using(SearchResultStreamDataReader reader = new SearchResultStreamDataReader(results))
+          using(var reader = new SearchResultStreamDataReader(results))
           {
             await sqlBlockCopy.WriteToServerAsync(reader).ConfigureAwait(false);
           }
