@@ -4,12 +4,18 @@ Usage:
 ```csharp
 using Splunk.Client;
 using SplunkClientDataReader;
+using System.Data.SqlClient;
 
 ...
 
 public void StreamSplunkToSqlServer()
 {
-  ...
+  
+  SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(connectionString,           SqlBulkCopyOptions.Default);
+  sqlBulkCopy.BatchSize = 5000;
+  sqlBulkCopy.EnableStreaming = true;
+  sqlBulkCopy.BulkCopyTimeout = 360;
+
   using (var context = new Context(Scheme.Https, endPoint.Host, endPoint.Port))
   {
     using (var client = new Service(context))
