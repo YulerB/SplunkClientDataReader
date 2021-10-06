@@ -1,6 +1,7 @@
 # Splunk Client Data Reader
 
 [![.NET](https://github.com/YulerB/SplunkClientDataReader/actions/workflows/dotnet.yml/badge.svg)](https://github.com/YulerB/SplunkClientDataReader/actions/workflows/dotnet.yml)
+![NuGet Badge](https://buildstats.info/nuget/SplunkClientDataReader)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=YulerB_SplunkClientDataReader&metric=alert_status)](https://sonarcloud.io/dashboard?id=YulerB_SplunkClientDataReader)
 
 Usage:
