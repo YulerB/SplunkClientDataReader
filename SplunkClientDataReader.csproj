@@ -12,7 +12,7 @@
         <ProjectGuid>{f26a0552-3dcc-46e3-8230-a95c4d2c3196}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' or '$(TargetFramework)' == 'net5.0'">
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.NETCore.App" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' or '$(TargetFramework)' == 'net5.0'">
         <PackageReference Include="Splunk.Client.DotnetCore" Version="1.0.7" />
